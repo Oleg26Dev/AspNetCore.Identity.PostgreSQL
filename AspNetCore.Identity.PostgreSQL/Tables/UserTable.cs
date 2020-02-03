@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AspNetCore.Identity.PostgreSQL.Context;
 
@@ -27,9 +28,6 @@ namespace AspNetCore.Identity.PostgreSQL.Tables
         internal const string FieldLockoutEnabled = "LockoutEnabled";
         internal const string FieldAccessFailedCount = "AccessFailedCount";
         internal const string FieldConcurrencyStamp = "ConcurrencyStamp";
-
-
-
 
         internal static string fullTableName = Consts.Schema.Quoted() + "." + TableName.Quoted();
 
@@ -73,6 +71,14 @@ namespace AspNetCore.Identity.PostgreSQL.Tables
 
         }
 
+        public List<TUser> GetUsers()
+        {
+            string commandText = "SELECT * FROM " + fullTableName;
+            Dictionary<string, object> parameters = new Dictionary<string, object>();
+            var rows = _database.ExecuteQuery(commandText, parameters);
+            var list = rows.Select(loadUser).ToList();
+            return list;
+        }
 
         /// <summary>
         /// Gets the user's name, provided with an ID.

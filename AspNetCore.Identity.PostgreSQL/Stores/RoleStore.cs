@@ -82,12 +82,14 @@ namespace AspNetCore.Identity.PostgreSQL.Stores
 
         public Task<string> GetRoleIdAsync(TRole role, CancellationToken cancellationToken)
         {
-            return Task.FromResult("");
+            return Task.FromResult(role.Id.ToString());
+            //return Task.FromResult("");
         }
 
         public Task<string> GetRoleNameAsync(TRole role, CancellationToken cancellationToken)
         {
-            return Task.FromResult("");
+            //return Task.FromResult("");
+            return Task.FromResult(role.Name);
         }
 
         public Task SetRoleNameAsync(TRole role, string roleName, CancellationToken cancellationToken)
@@ -112,7 +114,13 @@ namespace AspNetCore.Identity.PostgreSQL.Stores
 
         public Task<TRole> FindByNameAsync(string normalizedRoleName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+            ThrowIfDisposed();
+            var r = _roleTable.GetRoleByName(normalizedRoleName);
+            return Task.FromResult((TRole)r);
+            //return _roleTable.GetRoleByNameAsync(normalizedRoleName);
+
+            //throw new NotImplementedException();
         }
     }
 }

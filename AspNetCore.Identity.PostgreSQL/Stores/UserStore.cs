@@ -1128,6 +1128,26 @@ namespace AspNetCore.Identity.PostgreSQL.Stores
             return GetClaimsAsync(user, cancellationToken);
         }
 
-        public IQueryable<TUser> Users { get; }
+        //public IQueryable<TUser> Users { get getUsers(); }
+        public IQueryable<TUser> getUsers()
+        {
+            //List<TUser> list = new List<TUser>();
+            var list =_userTable.GetUsers();
+            var queryable = list.AsQueryable();
+            return queryable; 
+        }
+
+        public IQueryable<TUser> Users => getUsers();
+
+        //public IQueryable<TUser> Users => _userTable. _myDbContext.Users;
+
+        //public IQueryable<TUser> Users { get; }
+
+        //public IQueryable<TUser> Users
+        //{
+        //    get { return _userTable.EntitySet; }
+        //}
+        //var users = await UserManager.Users.ToListAsync();
+        //return users;
     }
 }    

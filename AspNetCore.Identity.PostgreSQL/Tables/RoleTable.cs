@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AspNetCore.Identity.PostgreSQL.Context;
 
 
@@ -122,10 +123,20 @@ namespace AspNetCore.Identity.PostgreSQL.Tables
         public IdentityRole GetRoleByName(string roleName)
         {
             var roleId = GetRoleId(roleName);
-            
-
             return GetRoleById(roleId); 
         }
+
+        public async Task<TRole> GetRoleByNameAsync(string normalizedRoleName)
+        {
+            TRole role = null;
+
+            await Task.Run(() =>
+            {
+                role = (TRole) GetRoleByName(normalizedRoleName);
+            });
+            return role;
+        }
+
 
         public int Update(IdentityRole role)
         {
