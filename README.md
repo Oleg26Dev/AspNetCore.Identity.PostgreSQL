@@ -1,6 +1,6 @@
 # AspNetCore Identity Provider for PostgreSQL
 
-Identity for PostgreSQL using the .Net Core 2.0
+Identity for PostgreSQL using the .Net Core 2.0, .Net Core 3.0
 
 ## Installation
 
